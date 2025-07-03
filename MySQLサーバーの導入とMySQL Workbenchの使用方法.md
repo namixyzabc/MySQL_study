@@ -41,17 +41,7 @@ sudo systemctl enable mysql
 sudo mysql_secure_installation
 ```
 
-### macOS環境での導入
 
-```bash
-# Homebrewを使用してインストール
-brew install mysql
-
-# MySQLサービスを開始
-brew services start mysql
-
-# 初期設定
-mysql_secure_installation
 ```
 
 ## 2. MySQL Workbenchの導入
