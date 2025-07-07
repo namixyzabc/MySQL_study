@@ -1,0 +1,107 @@
+
+
+テーブル作成 (CREATE TABLE)
+Generated sql
+-- 部署テーブル
+CREATE TABLE departments (
+    department_id   INT PRIMARY KEY,
+    department_name VARCHAR(50) NOT NULL
+);
+
+-- 従業員テーブル
+-- manager_idは同じemployeesテーブルのemployee_idを参照するため、
+-- テーブル作成後に外部キー制約を追加します。
+CREATE TABLE employees (
+    employee_id   INT PRIMARY KEY,
+    name          VARCHAR(50) NOT NULL,
+    department_id INT,
+    salary        INT,
+    hire_date     DATE,
+    manager_id    INT,
+    FOREIGN KEY (department_id) REFERENCES departments(department_id)
+);
+
+-- 商品テーブル
+CREATE TABLE products (
+    product_id   INT PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    price        INT
+);
+
+-- 注文テーブル
+CREATE TABLE orders (
+    order_id    INT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    order_date  DATE
+);
+
+-- 注文明細テーブル
+CREATE TABLE order_details (
+    order_id   INT,
+    product_id INT,
+    quantity   INT,
+    PRIMARY KEY (order_id, product_id), -- 複合主キー
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+
+◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+
+データ挿入 (INSERT INTO)
+Generated sql
+-- 部署データの挿入
+INSERT INTO departments (department_id, department_name) VALUES
+(1, '営業部'),
+(2, '開発部'),
+(3, '人事部'),
+(4, 'マーケティング部');
+
+-- 従業員データの挿入
+INSERT INTO employees (employee_id, name, department_id, salary, hire_date, manager_id) VALUES
+(1, '佐藤 一郎', 1, 8000000, '2015-04-01', NULL),     -- 営業部長 (マネージャーなし)
+(2, '鈴木 次郎', 2, 8500000, '2014-08-15', NULL),     -- 開発部長 (マネージャーなし)
+(3, '高橋 三郎', 1, 6000000, '2017-04-01', 1),        -- 営業部員 (上司: 佐藤)
+(4, '田中 四郎', 1, 5500000, '2018-10-01', 1),        -- 営業部員 (上司: 佐藤)
+(5, '伊藤 五郎', 2, 7000000, '2016-02-01', 2),        -- 開発部員 (上司: 鈴木)
+(6, '渡辺 六郎', 2, 7200000, '2019-04-01', 2),        -- 開発部員 (上司: 鈴木)
+(7, '山本 七郎', 2, 6800000, '2020-05-20', 2),        -- 開発部員 (上司: 鈴木)
+(8, '中村 八郎', 3, 5800000, '2016-09-01', NULL),     -- 人事部長 (マネージャーなし)
+(9, '小林 九子', 3, 4800000, '2021-04-01', 8),        -- 人事部員 (上司: 中村)
+(10, '加藤 十子', NULL, 4500000, '2022-01-15', 1);    -- 部署未所属 (上司: 佐藤)
+
+-- 商品データの挿入
+INSERT INTO products (product_id, product_name, price) VALUES
+(101, 'ノートPC A', 150000),
+(102, 'モニター B', 35000),
+(103, 'キーボード C', 8000),
+(104, 'マウス D', 4500),
+(105, 'Webカメラ E', 12000),
+(106, 'ドッキングステーション F', 25000);
+
+-- 注文データの挿入
+INSERT INTO orders (order_id, customer_id, order_date) VALUES
+(1001, 201, '2023-04-05'),
+(1002, 202, '2023-04-08'),
+(1003, 201, '2023-04-12'),
+(1004, 203, '2023-05-01'),
+(1005, 202, '2023-05-03'),
+(1006, 204, '2023-05-10');
+
+-- 注文明細データの挿入
+INSERT INTO order_details (order_id, product_id, quantity) VALUES
+(1001, 101, 1),
+(1001, 103, 1),
+(1002, 102, 2),
+(1003, 104, 1),
+(1003, 105, 1),
+(1004, 101, 10),
+(1004, 106, 10),
+(1005, 103, 5),
+(1006, 102, 1);
+IGNORE_WHEN_COPYING_START
+content_copy
+download
+Use code with caution.
+SQL
+IGNORE_WHEN_COPYING_END
