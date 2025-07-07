@@ -1,4 +1,4 @@
-実務で頻繁に使われるSQLのパターンを30種類、具体的なコード例と共に解説します。
+SQLのパターンを30種類、具体的なコード例と共に記述。
 サンプルとして、以下のようなテーブルを作成。
 
 *   **employees**: 従業員テーブル (employee_id, name, department_id, salary, hire_date, manager_id)
